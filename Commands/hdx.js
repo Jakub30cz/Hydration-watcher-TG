@@ -6,7 +6,6 @@ module.exports = {
     },
     async execute(ctx) {
         try {
-            // Constructing the message with HTML tags
             const hdxMessage = `
 <b><u>HDX Tokenomics 🪙</u></b>
 
@@ -25,12 +24,10 @@ To have a vote in the Hydration DAO, and to contribute to the determination of a
 - https://docs.hydration.net/tokenomics
 `;
 
-            // Reply with the formatted HTML message
             await ctx.replyWithHTML(hdxMessage);
 
         } catch (error) {
             console.error(error);
-            // Handle errors by replying with an error message
             await ctx.reply('Something went wrong. Please try again later.');
         }
     }
