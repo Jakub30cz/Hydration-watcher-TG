@@ -1,0 +1,9 @@
+{
+    "hostname":"db-fde-02.sparkedhost.us",
+    "user":"u136008_jmPq1UIShi",
+    "password":"!NdSx6@6w05CPao@2B1n3D7F",
+    "database":"s136008_tg_hydration_watcher",
+    "graphics_source":"https://cdn.jsdelivr.net/gh/galacticcouncil/intergalactic-asset-metadata@latest/assets/",
+    "hydration_logo": "./Assets/default/Hydration-Watcher.png"
+
+}
