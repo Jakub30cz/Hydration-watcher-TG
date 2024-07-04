@@ -1,10 +1,15 @@
 const { Telegraf } = require('telegraf');
 const { loadCommands } = require('./Handlers/commandHandler');
+const { priceUpdater } = require('./Functions/priceUpdater');
+const { getAllTokens } = require('./Functions/getAllTokens');
+const { ApiPromise, WsProvider } = require('@polkadot/api');
 
 // Telegram bot token
 const TELEGRAM_TOKEN = '7427703326:AAFmXQJFVB4RXMJu9HR34GoLtiy1IobTQBM';
 
 const bot = new Telegraf(TELEGRAM_TOKEN);
+
+bot.config = require('./config.json');
 
 bot.use((ctx, next) => {
     if (ctx.updateType === 'message' && ctx.message.text && ctx.message.text.startsWith('/')) {
@@ -13,8 +18,16 @@ bot.use((ctx, next) => {
     return next();
 });
 
-loadCommands(bot).then(() => {
+loadCommands(bot).then(async () => {
+
+    const provider = new WsProvider('wss://rpc.hydradx.cloud');
+    const api = await ApiPromise.create({ provider });
+
+    bot.api = api;
+    bot.tokens = await getAllTokens(bot);
+    
     bot.launch();
+    priceUpdater(bot);
 });
 
 // Graceful stop

@@ -8,7 +8,7 @@ async function loadCommands(bot) {
     Files.forEach((file) => {
         const command = require(file);
         const commandData = command.data;
-        bot.command(commandData.name, (ctx) => command.execute(ctx));
+        bot.command(commandData.name, (ctx) => command.execute(ctx, bot));
         table.addRow(commandData.name, "✅");
     });
 
