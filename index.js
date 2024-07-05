@@ -5,7 +5,7 @@ const { loadEvents } = require('./Handlers/eventHandler');
 const { priceUpdater } = require('./Functions/priceUpdater');
 const { getAllTokens } = require('./Functions/getAllTokens');
 const { ApiPromise, WsProvider } = require('@polkadot/api');
-const { query } = require('./Functions/db');
+const { reloadTokens } = require('./Functions/tokens');
 
 // Telegram bot token
 const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
@@ -42,6 +42,7 @@ loadCommands(bot).then(async () => {
     priceUpdater(bot);
 });
 
+reloadTokens(bot);
 
 // Graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'));
