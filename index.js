@@ -8,7 +8,7 @@ const { ApiPromise, WsProvider } = require('@polkadot/api');
 const { query } = require('./Functions/db');
 
 // Telegram bot token
-const TELEGRAM_TOKEN = '7427703326:AAFmXQJFVB4RXMJu9HR34GoLtiy1IobTQBM';
+const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
 
 const bot = new Telegraf(TELEGRAM_TOKEN);
 
