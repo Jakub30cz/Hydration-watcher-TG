@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { Telegraf } = require('telegraf');
 const { loadCommands } = require('./Handlers/commandHandler');
 const { loadEvents } = require('./Handlers/eventHandler');
@@ -11,7 +12,15 @@ const TELEGRAM_TOKEN = '7427703326:AAFmXQJFVB4RXMJu9HR34GoLtiy1IobTQBM';
 
 const bot = new Telegraf(TELEGRAM_TOKEN);
 
-bot.config = require('./config.json');
+bot.config = {
+    hostname: process.env.DB_HOSTNAME,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
+    graphics_source: process.env.GRAPHICS_SOURCE,
+    hydration_logo: process.env.HYDRATION_LOGO
+};
+
 
 bot.use((ctx, next) => {
     if (ctx.updateType === 'message' && ctx.message.text && ctx.message.text.startsWith('/')) {
