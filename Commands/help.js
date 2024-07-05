@@ -23,6 +23,13 @@ module.exports = {
 
 <b>/help</b> - <i>Display this help message with all available commands.</i>
 
+<b>/price [token_name/token_symbol]</b> - <i>Get the current price of a token.</i>
+
+<b>/track [token_name/token_symbol] [price]</b> - <i>Track the price of a currency.</i>
+
+<b>/untrack</b> - <i>Stop tracking the price of a currency.</i>
+
+
         `;
         ctx.replyWithHTML(helpMessage);
     }

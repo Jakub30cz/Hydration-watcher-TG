@@ -51,15 +51,6 @@ async function priceUpdater(bot) {
 
                                         await bot.telegram.sendMessage(user, message, { parse_mode: 'HTML' });
 
-                                        /*
-                                        await user.send({content: `Price tracking alert on ${name}!` ,
-                                             embeds: [embed], files: [
-                                                 { attachment: './Assets/' + symbol + '.png', name: 'thumbnail.png' },
-                                                 { attachment: bot.config.hydration_logo, name: 'logo.png' }
-                                             ], ephemeral: true
-                                         });
-                                        */
-
                                         await deleteFromTrackers(follower.user_id, follower.token_id, follower.target_price);
 
                                    } catch (error) {
@@ -80,15 +71,6 @@ async function priceUpdater(bot) {
 
                                         await bot.telegram.sendMessage(user, message, { parse_mode: 'HTML' });
                                         
-                                        /*
-                                        await user.send({content: `Price tracking alert on ${name}!` ,
-                                             embeds: [embed], files: [
-                                                 { attachment: './Assets/' + symbol + '.png', name: 'thumbnail.png' },
-                                                 { attachment: bot.config.hydration_logo, name: 'logo.png' }
-                                             ], ephemeral: true
-                                         });
-                                        */
-
                                         await deleteFromTrackers(follower.user_id, follower.token_id, follower.target_price);
                                    } catch (error) {
                                         console.error(error);

@@ -12,7 +12,7 @@ async function loadCommands(bot) {
         table.addRow(commandData.name, "✅");
     });
 
-    console.log(table.toString(), "\nCommands loaded and bot is running.");
+    console.log(table.toString(), "\nCommands loaded.");
     return true;
 }
 
