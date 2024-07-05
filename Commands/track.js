@@ -11,6 +11,10 @@ module.exports = {
         const messageText = ctx.message.text;
         const args = messageText.split(' ');
 
+        if (ctx.chat.type !== 'private') {
+            return;
+        }
+
         const userId = ctx.message.from.id;
 
         // verify that the user has provided a currency name and price

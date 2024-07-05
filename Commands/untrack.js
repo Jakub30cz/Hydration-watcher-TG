@@ -10,6 +10,10 @@ module.exports = {
     async execute(ctx, bot) {
         const userId = ctx.message.from.id;
 
+        if (ctx.chat.type !== 'private') {
+            return;
+        }
+
         try {
             const check = await query(`SELECT * FROM trackers WHERE user_id = ?`, [userId]);
 

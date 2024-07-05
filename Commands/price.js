@@ -9,7 +9,7 @@ module.exports = {
     async execute(ctx, bot) {
         const messageText = ctx.message.text;
         const args = messageText.split(' ');
-
+        
         // verify that the user has provided a token name or symbol
         if (args.length < 2) {
             return ctx.reply('Please provide a token name or symbol. Example: /price HDX');
