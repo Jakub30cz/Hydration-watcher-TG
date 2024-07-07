@@ -33,7 +33,7 @@ async function priceUpdater(bot) {
                bot.prices = prices;
 
                const followers = await query(`SELECT id, CAST(user_id AS CHAR) AS user_id, token_id, target_price, default_price FROM trackers `, []);
-               
+
                for (const follower of followers) {
 
                     const priceResult = prices.find(price => price.token_id == follower.token_id);
@@ -45,7 +45,7 @@ async function priceUpdater(bot) {
                          if (follower.target_price >= price) {
                               const user = follower.user_id;
                               //console.log("Target price reached: Target: " + follower.target_price + " Now: " + price);
-                              if(user) {
+                              if (user) {
                                    try {
                                         const message = buildResponse(name, follower.target_price, follower.token_id);
 
@@ -54,26 +54,36 @@ async function priceUpdater(bot) {
                                         await deleteFromTrackers(follower.user_id, follower.token_id, follower.target_price);
 
                                    } catch (error) {
-                                        console.error(error);
-                                   }    
+                                        if (error.response && error.response.error_code === 403) {
+                                             console.error(`Error 403: User has blocked the bot.`);
+                                             await deleteFromTrackers(follower.user_id, follower.token_id, follower.target_price);
+                                        } else {
+                                             console.error(`Failed to send message to chat:`, error);
+                                        }
+                                   }
                               }
                          } else {
-                              console.log("Target price not reached: Target: " + follower.target_price + " Now: " + price);                         
+                              console.log("Target price not reached: Target: " + follower.target_price + " Now: " + price);
                          }
                     }
                     if (parseFloat(follower.target_price) >= parseFloat(follower.default_price)) {
                          if (follower.target_price <= price) {
                               const user = follower.user_id;
                               console.log("Target price reached: Target: " + follower.target_price + " Now: " + price);
-                              if(user) {
+                              if (user) {
                                    try {
                                         const message = buildResponse(name, follower.target_price, follower.token_id);
 
                                         await bot.telegram.sendMessage(user, message, { parse_mode: 'HTML' });
-                                        
+
                                         await deleteFromTrackers(follower.user_id, follower.token_id, follower.target_price);
                                    } catch (error) {
-                                        console.error(error);
+                                        if (error.response && error.response.error_code === 403) {
+                                             console.error(`Error 403: User has blocked the bot.`);
+                                             await deleteFromTrackers(follower.user_id, follower.token_id, follower.target_price);
+                                        } else {
+                                             console.error(`Failed to send message to chat:`, error);
+                                        }
                                    }
                               }
                          }
@@ -96,7 +106,8 @@ Price has reached your <b>target price of <i>$${parseFloat(target_price)} 🪙</
 <a href="https://app.hydration.net/trade/swap/?assetOut=${token_id}&assetIn=10">Click here to trade ${name} on Hydration platform 🔗</a>
 `;
                }
-          }});
+          }
+     });
 }
 
 module.exports = { priceUpdater };

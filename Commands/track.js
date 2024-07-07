@@ -36,15 +36,11 @@ module.exports = {
             return ctx.reply('Price of the currency must be a number. Example: /track HDX 0.0215');
         }
 
-        //console.log(bot.tokens);
-
         const token = bot.tokens.find(token => token.name.toLowerCase() === currencyName.toLowerCase() || token.symbol.toLowerCase() === currencyName.toLowerCase());
 
         if (!token || token.id == '10' || price <= 0) {
             await ctx.reply('Token name or symbol not found.');
         }
-
-        console.log(userId);
 
         const check = await query(`SELECT * FROM trackers WHERE user_id = ? AND token_id = ? AND target_price = ?`, [userId, token.id, price]);
             
@@ -66,6 +62,8 @@ module.exports = {
         ctx.replyWithHTML(`<b><u>Tracking started!</u></b>
 <b>Currency:</b> ${token.name} (${token.symbol}) 🪙
 <b>Target Price:</b> $${price} 🎯
-<b>Current Price:</b> $${formatPrice(defaultPrice)} 🏷️`);
+<b>Current Price:</b> $${formatPrice(defaultPrice)} 🏷️
+
+<i> ⚠️ To ensure you receive timely updates and notifications from our bot, please make sure you have allowed messages from the bot. Otherwise your tracker will be deleted when it hits your target price. ⚠️ </i>`);
     }
 };
